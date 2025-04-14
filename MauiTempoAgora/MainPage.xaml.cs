@@ -12,7 +12,7 @@ namespace MauiTempoAgora
             InitializeComponent();
         }
 
-        private async async GetCidade(double lt, double ln)
+        private async void GetCidade(double lt, double ln)
         {
             try
             {
@@ -86,7 +86,7 @@ namespace MauiTempoAgora
                     TimeSpan.FromSeconds(10)
                 );
 
-                Location? local = await Geolocation.Default.GetGeolocationAsync(request);
+                Location? local = await Geolocation.Default.GetLocationAsync(request);
 
                 if(local != null)
                 {
