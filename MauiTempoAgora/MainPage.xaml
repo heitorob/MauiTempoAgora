@@ -10,7 +10,7 @@
             <Button Text="Minha Localização" Clicked="ButtonLocalizacao_Clicked" />
             <Label x:Name="lbl_coords" />
 
-            <Entry x:Name="txt_cidade" />
+            <Entry x:Name="txt_cidade" Placeholder="Digite a cidade." />
             <Button Text="Buscar Previsão" Clicked="ButtonPrevisao_Clicked" />
 
             <Label x:Name="lbl_res" />
