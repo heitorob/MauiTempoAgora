@@ -15,34 +15,28 @@ namespace MauiTempoAgora.Helpers
         public SQLiteDatabaseHelper(string rota)
         {
             conectar = new SQLiteAsyncConnection(rota);
-            conectar.CreateTableAsync<Previsao>().Wait();
+            conectar.CreateTableAsync<Tempo>().Wait();
         }
 
-        public Task<int> Insert(Previsao p)
+        public Task<int> Insert(Tempo p)
         {
             return conectar.InsertAsync(p);
         }
 
         public Task<int> Delete(int id)
         {
-            return conectar.Table<Previsao>().DeleteAsync(i => i.Id == id);
+            return conectar.Table<Tempo>().DeleteAsync(i => i.Id == id);
         }
 
-        public Task<List<Previsao>> GetAll()
+        public Task<List<Tempo>> GetAll()
         {
-            return conectar.Table<Previsao>().ToListAsync();
+            return conectar.Table<Tempo>().ToListAsync();
         }
 
-        public Task<List<Previsao>> SearchByDate(DateTime q)
+        public Task<List<Tempo>> Search(string q)
         {
-            string sql = "SELECT * FROM Previsao WHERE data LIKE ?";
-            return conectar.QueryAsync<Previsao>(sql, q);
-        }
-
-        public Task<List<Previsao>> SearchByLocation(string q)
-        {
-            string sql = "SELECT * FROM Previsao WHERE cidade LIKE ?";
-            return conectar.QueryAsync<Previsao>(sql, "%",  q, "%");
+            string sql = "SELECT * FROM Tempo WHERE description LIKE ?";
+            return conectar.QueryAsync<Tempo>(sql, "%",  q, "%");
         }
     }
 }
