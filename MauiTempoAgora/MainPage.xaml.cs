@@ -1,26 +1,45 @@
 ﻿using MauiTempoAgora.Models;
 using MauiTempoAgora.Services;
-using System;
-using System.Diagnostics;
+using System.Collections.ObjectModel;
 
 namespace MauiTempoAgora
 {
     public partial class MainPage : ContentPage
     {
+        ObservableCollection<Tempo> lista = new ObservableCollection<Tempo>();
+
         public MainPage()
         {
             InitializeComponent();
+
+            lst_historico.ItemsSource = lista;
+        }
+
+        protected async override void OnAppearing()
+        {
+            try
+            {
+                lista.Clear();
+
+                List<Tempo> tmp = await App.Db.GetAll();
+
+                tmp.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
         }
 
         private async void ButtonPrevisao_Clicked(object sender, EventArgs e)
         {
             try
             {
-                if(!string.IsNullOrEmpty(txt_cidade.Text))
+                if (!string.IsNullOrEmpty(txt_cidade.Text))
                 {
                     Tempo? t = await DataService.GetPrevisao(txt_cidade.Text);
 
-                    if(t != null)
+                    if (t != null)
                     {
                         string dados_previsao = "";
 
@@ -58,19 +77,72 @@ namespace MauiTempoAgora
             }
         }
 
-        private void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
         {
+            try
+            {
+                string q = e.NewTextValue;
 
+                lst_historico.IsRefreshing = true;
+
+                lista.Clear();
+
+                List<Tempo> tmp = await App.Db.Search(q);
+
+                tmp.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
+            finally
+            {
+                lst_historico.IsRefreshing = false;
+            }
         }
 
-        private void lst_historico_Refreshing(object sender, EventArgs e)
+        private async void lst_historico_Refreshing(object sender, EventArgs e)
         {
+            try
+            {
+                lista.Clear();
 
+                List<Tempo> tmp = await App.Db.GetAll();
+
+                tmp.ForEach(i => lista.Add(i));
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
+            finally
+            {
+                lst_historico.IsRefreshing = false;
+            }
         }
 
-        private void lst_historico_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private async void lst_historico_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            try
+            {
+                Tempo t = BindingContext as Tempo;
 
+                if (t == null)
+                {
+                    await DisplayAlert("Erro", "Nenhum registro selecionado.", "OK");
+                    return;
+                }
+
+                bool resposta = await DisplayAlert("Apagar Registro", "Deseja realmente apagar este registro?", "Sim", "Não");
+                if (!resposta) return;
+
+                await App.Db.Delete(t.Id);
+                await DisplayAlert("Registro Apagado", "Registro apagado.", "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Ops", ex.Message, "OK");
+            }
         }
     }
 }

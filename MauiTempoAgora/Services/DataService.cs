@@ -20,7 +20,6 @@ namespace MauiTempoAgora.Services
                 {
                     string json = await rspt.Content.ReadAsStringAsync();
                     var rascunho = JObject.Parse(json);
-                    DateTime time = new();
                     DateTimeOffset sunrise = DateTimeOffset.FromUnixTimeSeconds((long)rascunho["sys"]["sunrise"]);
                     DateTimeOffset sunset = DateTimeOffset.FromUnixTimeSeconds((long)rascunho["sys"]["sunset"]);
 
