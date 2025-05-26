@@ -33,7 +33,14 @@ namespace MauiTempoAgora
 
                         lbl_res.Text = dados_previsao;
 
-                        
+                        try
+                        {
+                            await App.Db.Insert(t);
+                        }
+                        catch (Exception ex)
+                        {
+                            await DisplayAlert("Você é um imundo!", ex.Message, "OK");
+                        }
                     }
                     else
                     {
@@ -49,6 +56,21 @@ namespace MauiTempoAgora
             {
                 await DisplayAlert("Ops", ex.Message, "OK");
             }
+        }
+
+        private void txt_search_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void lst_historico_Refreshing(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lst_historico_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+
         }
     }
 }

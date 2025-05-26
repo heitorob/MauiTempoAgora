@@ -13,8 +13,20 @@
 
             <Label x:Name="lbl_res" />
 
-            <WebView x:Name="wv_mapa" HeightRequest="500" />
-            
+            <StackLayout>
+                <SearchBar x:Name="txt_search"
+                           Margin="15, 0, 15, 0"
+                           Placeholder="Buscar Previsão"
+                           TextChanged="txt_search_TextChanged"/>
+                
+                <ListView x:Name="lst_historico"
+                          IsPullToRefreshEnabled="True"
+                          Refreshing="lst_historico_Refreshing"
+                          ItemSelected="lst_historico_ItemSelected">
+                    
+                </ListView>
+            </StackLayout>
+
         </VerticalStackLayout>
     </ScrollView>
 
