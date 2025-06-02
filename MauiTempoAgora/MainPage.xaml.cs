@@ -38,6 +38,7 @@ namespace MauiTempoAgora
                 if (!string.IsNullOrEmpty(txt_cidade.Text))
                 {
                     Tempo? t = await DataService.GetPrevisao(txt_cidade.Text);
+                    t.cidade = txt_cidade.Text;
 
                     if (t != null)
                     {
@@ -55,10 +56,11 @@ namespace MauiTempoAgora
                         try
                         {
                             await App.Db.Insert(t);
+                            lista.Add(t);
                         }
                         catch (Exception ex)
                         {
-                            await DisplayAlert("Você é um imundo!", ex.Message, "OK");
+                            await DisplayAlert("Erro", ex.Message, "OK");
                         }
                     }
                     else
@@ -125,7 +127,7 @@ namespace MauiTempoAgora
         {
             try
             {
-                Tempo t = BindingContext as Tempo;
+                Tempo t = e.SelectedItem as Tempo;
 
                 if (t == null)
                 {
@@ -137,7 +139,17 @@ namespace MauiTempoAgora
                 if (!resposta) return;
 
                 await App.Db.Delete(t.Id);
-                await DisplayAlert("Registro Apagado", "Registro apagado.", "OK");
+
+                try
+                {
+                    lista.Clear();
+                    List<Tempo> tmp = await App.Db.GetAll();
+                    tmp.ForEach(i => lista.Add(i));
+                }
+                catch (Exception ex)
+                {
+                    await DisplayAlert("Ops", ex.Message, "OK");
+                }
             }
             catch (Exception ex)
             {

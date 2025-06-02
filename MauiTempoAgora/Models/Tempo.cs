@@ -5,6 +5,7 @@ namespace MauiTempoAgora.Models
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
+        public string cidade {  get; set; }
         public double? lon { get; set; }
         public double? lat { get; set; }
         public double? tempmin {  get; set; }

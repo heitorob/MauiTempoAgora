@@ -24,24 +24,26 @@
                           Refreshing="lst_historico_Refreshing"
                           ItemSelected="lst_historico_ItemSelected">
                     <ListView.Header>
-                        <Grid ColumnDefinitions="100, 100, 100, 100, 100"
+                        <Grid ColumnDefinitions="*, *, *, *, *, *"
                               BackgroundColor="{StaticResource Gray100}">
-                            <Label Grid.Column="0" Text="🏙 Cidade" FontAttributes="Bold"/>
-                            <Label Grid.Column="1" Text="📅 Data" FontAttributes="Bold"/>
-                            <Label Grid.Column="2" Text="🌥 Previsão" FontAttributes="Bold"/>
-                            <Label Grid.Column="3" Text="🌡 Máxima" FontAttributes="Bold"/>
-                            <Label Grid.Column="4" Text="🌡 Mínima" FontAttributes="Bold"/>
+                            <Label Grid.Column="0" Text="Id" FontAttributes="Bold"/>
+                            <Label Grid.Column="1" Text="🏙 Cidade" FontAttributes="Bold"/>
+                            <Label Grid.Column="2" Text="📅 Data" FontAttributes="Bold"/>
+                            <Label Grid.Column="3" Text="🌥 Previsão" FontAttributes="Bold"/>
+                            <Label Grid.Column="4" Text="🌡 Máxima" FontAttributes="Bold"/>
+                            <Label Grid.Column="5" Text="🌡 Mínima" FontAttributes="Bold"/>
                         </Grid>
                     </ListView.Header>
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid ColumnDefinitions="100, 100, 100, 100, 100">
-                                    <Label Grid.Column="0" Text="{Binding cidade}"/>
-                                    <Label Grid.Column="1" Text="{Binding data}"/>
-                                    <Label Grid.Column="2" Text="{Binding description}"/>
-                                    <Label Grid.Column="3" Text="{Binding tempmax}"/>
-                                    <Label Grid.Column="4" Text="{Binding tempmin}"/>
+                                <Grid ColumnDefinitions="*, *, *, *, *, *">
+                                    <Label Grid.Column="0" Text="{Binding Id}"/>
+                                    <Label Grid.Column="1" Text="{Binding cidade}"/>
+                                    <Label Grid.Column="2" Text="{Binding data}"/>
+                                    <Label Grid.Column="3" Text="{Binding description}"/>
+                                    <Label Grid.Column="4" Text="{Binding tempmax}"/>
+                                    <Label Grid.Column="5" Text="{Binding tempmin}"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>

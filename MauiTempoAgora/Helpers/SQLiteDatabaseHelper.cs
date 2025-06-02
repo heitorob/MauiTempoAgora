@@ -35,7 +35,7 @@ namespace MauiTempoAgora.Helpers
 
         public Task<List<Tempo>> Search(string q)
         {
-            string sql = "SELECT * FROM Tempo WHERE description LIKE ?";
+            string sql = "SELECT * FROM Tempo WHERE cidade LIKE ?";
             return conectar.QueryAsync<Tempo>(sql, "%",  q, "%");
         }
     }
