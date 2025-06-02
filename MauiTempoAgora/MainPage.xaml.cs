@@ -20,10 +20,9 @@ namespace MauiTempoAgora
             try
             {
                 lista.Clear();
-
                 List<Tempo> tmp = await App.Db.GetAll();
-
                 tmp.ForEach(i => lista.Add(i));
+                lbl_res.Text = "Insira a cidade para ver a previsão.";
             }
             catch (Exception ex)
             {
@@ -39,6 +38,7 @@ namespace MauiTempoAgora
                 {
                     Tempo? t = await DataService.GetPrevisao(txt_cidade.Text);
                     t.cidade = txt_cidade.Text;
+                    txt_cidade.Text = null;
 
                     if (t != null)
                     {
@@ -47,9 +47,10 @@ namespace MauiTempoAgora
                         dados_previsao = $"Latitude: {t.lat} \n" +
                                          $"Longitude: {t.lon} \n" +
                                          $"Nascer do Sol: {t.sunrise} \n" +
-                                         $"Por do Sol: {t.sunset} \n" +
+                                         $"Pôr do Sol: {t.sunset} \n" +
                                          $"Temperatura Máxima: {t.tempmax} \n" +
-                                         $"Temperatura Mínima: {t.tempmin} \n";
+                                         $"Temperatura Mínima: {t.tempmin} \n" +
+                                         $"Descrição: {t.description}";
 
                         lbl_res.Text = dados_previsao;
 
