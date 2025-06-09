@@ -1,61 +1,68 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiTempoAgora.MainPage">
-
-    <ScrollView>
-        <VerticalStackLayout
+             x:Class="MauiTempoAgora.MainPage"
+             Title="Previsão do Tempo">
+    <Grid>
+        <Image Source="windowsxp.png"
+               Aspect="AspectFill"
+               HorizontalOptions="Fill"
+               VerticalOptions="Fill" />
+        <ScrollView>
+            <VerticalStackLayout
             Padding="30,0"
             Spacing="25">
 
-            <Entry x:Name="txt_cidade" Placeholder="Digite a cidade." />
-            <Button Text="Buscar Previsão" Clicked="ButtonPrevisao_Clicked" />
+                <Entry x:Name="txt_cidade" Placeholder="Digite a cidade." BackgroundColor="White" Margin="0, 15, 0, 0" />
+                <Button Text="Buscar Previsão" Clicked="ButtonPrevisao_Clicked" BackgroundColor="RoyalBlue"/>
 
-            <Label x:Name="lbl_res" />
+                <Label x:Name="lbl_res" BackgroundColor="White" Padding="15, 15, 15, 15"/>
 
-            <StackLayout>
-                <SearchBar x:Name="txt_search"
-                           Margin="15, 0, 15, 0"
+                <StackLayout>
+                    <SearchBar x:Name="txt_search"
+                           Margin="15, 0, 15, 15"
+                           BackgroundColor="White"
                            Placeholder="Buscar Previsão"
                            TextChanged="txt_search_TextChanged"/>
-                
-                <ListView x:Name="lst_historico"
+
+                    <ListView x:Name="lst_historico"
                           IsPullToRefreshEnabled="True"
                           Refreshing="lst_historico_Refreshing"
                           ItemSelected="lst_historico_ItemSelected">
-                    <ListView.Header>
-                        <Grid ColumnDefinitions="*, *, *, *, *, *, *, *"
-                              BackgroundColor="{StaticResource Gray100}">
-                            <Label Grid.Column="0" Text="Id" FontAttributes="Bold"/>
-                            <Label Grid.Column="1" Text="Cidade" FontAttributes="Bold"/>
-                            <Label Grid.Column="2" Text="Data" FontAttributes="Bold"/>
-                            <Label Grid.Column="3" Text="Previsão" FontAttributes="Bold"/>
-                            <Label Grid.Column="4" Text="Temperatura Máxima" FontAttributes="Bold"/>
-                            <Label Grid.Column="5" Text="Temperatura Mínima" FontAttributes="Bold"/>
-                            <Label Grid.Column="6" Text="Nascer do Sol" FontAttributes="Bold"/>
-                            <Label Grid.Column="7" Text="Pôr do Sol" FontAttributes="Bold"/>
-                        </Grid>
-                    </ListView.Header>
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid ColumnDefinitions="*, *, *, *, *, *, *, *">
-                                    <Label Grid.Column="0" Text="{Binding Id}"/>
-                                    <Label Grid.Column="1" Text="{Binding cidade}"/>
-                                    <Label Grid.Column="2" Text="{Binding data}"/>
-                                    <Label Grid.Column="3" Text="{Binding description}"/>
-                                    <Label Grid.Column="4" Text="{Binding tempmax}"/>
-                                    <Label Grid.Column="5" Text="{Binding tempmin}"/>
-                                    <Label Grid.Column="6" Text="{Binding sunrise}"/>
-                                    <Label Grid.Column="7" Text="{Binding sunset}"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </StackLayout>
+                        <ListView.Header>
+                            <Grid ColumnDefinitions="*, *, *, *, *, *, *, *"
+                              BackgroundColor="RoyalBlue">
+                                <Label Grid.Column="0" Text="Id" IsVisible="False"/>
+                                <Label Grid.Column="1" Text="Cidade" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="2" Text="Data" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="3" Text="Previsão" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="4" Text="Temperatura Máxima" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="5" Text="Temperatura Mínima" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="6" Text="Nascer do Sol" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="7" Text="Pôr do Sol" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                            </Grid>
+                        </ListView.Header>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid ColumnDefinitions="*, *, *, *, *, *, *, *"
+                                          Background="AliceBlue">
+                                        <Label Grid.Column="0" Text="{Binding Id}" IsVisible="False"/>
+                                        <Label Grid.Column="1" Text="{Binding cidade}"/>
+                                        <Label Grid.Column="2" Text="{Binding data}"/>
+                                        <Label Grid.Column="3" Text="{Binding description}"/>
+                                        <Label Grid.Column="4" Text="{Binding tempmax}"/>
+                                        <Label Grid.Column="5" Text="{Binding tempmin}"/>
+                                        <Label Grid.Column="6" Text="{Binding sunrise}"/>
+                                        <Label Grid.Column="7" Text="{Binding sunset}"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackLayout>
 
-        </VerticalStackLayout>
-    </ScrollView>
-
+            </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

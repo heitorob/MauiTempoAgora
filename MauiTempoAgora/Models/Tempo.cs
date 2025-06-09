@@ -16,6 +16,6 @@ namespace MauiTempoAgora.Models
         public string? description { get; set; }
         public string? sunrise {  get; set; }
         public string? sunset { get; set; }
-        public DateTime? data { get => DateTime.Now; }
+        public DateTime? data { get; set; }
     }
 }

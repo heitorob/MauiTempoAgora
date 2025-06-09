@@ -37,11 +37,12 @@ namespace MauiTempoAgora
                 if (!string.IsNullOrEmpty(txt_cidade.Text))
                 {
                     Tempo? t = await DataService.GetPrevisao(txt_cidade.Text);
-                    t.cidade = txt_cidade.Text;
-                    txt_cidade.Text = null;
 
                     if (t != null)
                     {
+                        t.cidade = txt_cidade.Text;
+                        txt_cidade.Text = null;
+                        t.data = DateTime.Now;
                         string dados_previsao = "";
 
                         dados_previsao = $"Latitude: {t.lat} \n" +
