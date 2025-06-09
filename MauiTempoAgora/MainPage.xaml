@@ -16,7 +16,14 @@
                 <Entry x:Name="txt_cidade" Placeholder="Digite a cidade." BackgroundColor="White" Margin="0, 15, 0, 0" />
                 <Button Text="Buscar Previsão" Clicked="ButtonPrevisao_Clicked" BackgroundColor="RoyalBlue"/>
 
-                <Label x:Name="lbl_res" BackgroundColor="White" Padding="15, 15, 15, 15"/>
+                <Border
+                    Stroke="Transparent"
+                    StrokeShape="RoundRectangle 5">
+                    <Label x:Name="lbl_res"
+                        TextColor="RoyalBlue"
+                        Background="AliceBlue"
+                        Padding="15, 15, 15, 15"/>
+                </Border>
 
                 <StackLayout>
                     <SearchBar x:Name="txt_search"
@@ -30,31 +37,29 @@
                           Refreshing="lst_historico_Refreshing"
                           ItemSelected="lst_historico_ItemSelected">
                         <ListView.Header>
-                            <Grid ColumnDefinitions="*, *, *, *, *, *, *, *"
+                            <Grid Padding="5, 5, 5, 5" ColumnDefinitions="*, *, *, *, *, *, *"
                               BackgroundColor="RoyalBlue">
-                                <Label Grid.Column="0" Text="Id" IsVisible="False"/>
-                                <Label Grid.Column="1" Text="Cidade" TextColor="WhiteSmoke" FontAttributes="Bold"/>
-                                <Label Grid.Column="2" Text="Data" TextColor="WhiteSmoke" FontAttributes="Bold"/>
-                                <Label Grid.Column="3" Text="Previsão" TextColor="WhiteSmoke" FontAttributes="Bold"/>
-                                <Label Grid.Column="4" Text="Temperatura Máxima" TextColor="WhiteSmoke" FontAttributes="Bold"/>
-                                <Label Grid.Column="5" Text="Temperatura Mínima" TextColor="WhiteSmoke" FontAttributes="Bold"/>
-                                <Label Grid.Column="6" Text="Nascer do Sol" TextColor="WhiteSmoke" FontAttributes="Bold"/>
-                                <Label Grid.Column="7" Text="Pôr do Sol" TextColor="WhiteSmoke" FontAttributes="Bold"/>
+                                <Label Grid.Column="0" Text="Cidade 🏙" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                                <Label Grid.Column="1" Text="Data 📅" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                                <Label Grid.Column="2" Text="Previsão 🌥" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                                <Label Grid.Column="3" Text="Temperatura Máxima 🌡" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                                <Label Grid.Column="4" Text="Temperatura Mínima ❄" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                                <Label Grid.Column="5" Text="Nascer do Sol 🌄" TextColor="WhiteSmoke" FontAttributes="Bold" />
+                                <Label Grid.Column="6" Text="Pôr do Sol 🌇" TextColor="WhiteSmoke" FontAttributes="Bold" />
                             </Grid>
                         </ListView.Header>
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <Grid ColumnDefinitions="*, *, *, *, *, *, *, *"
+                                    <Grid Padding="5, 5, 5, 5" ColumnDefinitions="*, *, *, *, *, *, *"
                                           Background="AliceBlue">
-                                        <Label Grid.Column="0" Text="{Binding Id}" IsVisible="False"/>
-                                        <Label Grid.Column="1" Text="{Binding cidade}"/>
-                                        <Label Grid.Column="2" Text="{Binding data}"/>
-                                        <Label Grid.Column="3" Text="{Binding description}"/>
-                                        <Label Grid.Column="4" Text="{Binding tempmax}"/>
-                                        <Label Grid.Column="5" Text="{Binding tempmin}"/>
-                                        <Label Grid.Column="6" Text="{Binding sunrise}"/>
-                                        <Label Grid.Column="7" Text="{Binding sunset}"/>
+                                        <Label Grid.Column="0" Text="{Binding cidade}"/>
+                                        <Label Grid.Column="1" Text="{Binding data}"/>
+                                        <Label Grid.Column="2" Text="{Binding description}"/>
+                                        <Label Grid.Column="3" Text="{Binding tempmax}"/>
+                                        <Label Grid.Column="4" Text="{Binding tempmin}"/>
+                                        <Label Grid.Column="5" Text="{Binding sunrise}"/>
+                                        <Label Grid.Column="6" Text="{Binding sunset}"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>

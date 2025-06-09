@@ -1,6 +1,7 @@
 ﻿using MauiTempoAgora.Models;
 using MauiTempoAgora.Services;
 using System.Collections.ObjectModel;
+using System.Globalization;
 
 namespace MauiTempoAgora
 {
@@ -40,8 +41,7 @@ namespace MauiTempoAgora
 
                     if (t != null)
                     {
-                        t.cidade = txt_cidade.Text;
-                        txt_cidade.Text = null;
+                        t.cidade = CapitalizarNome(txt_cidade.Text);
                         t.data = DateTime.Now;
                         string dados_previsao = "";
 
@@ -74,6 +74,7 @@ namespace MauiTempoAgora
                 {
                     lbl_res.Text = "Preencha a cidade.";
                 }
+                txt_cidade.Text = null;
             }
             catch (Exception ex)
             {
@@ -157,6 +158,40 @@ namespace MauiTempoAgora
             {
                 await DisplayAlert("Ops", ex.Message, "OK");
             }
+        }
+
+        public static string CapitalizarNome(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto))
+                return texto;
+
+            string[] excecoes = { "de", "da", "do", "das", "dos", "e" };
+            string[] palavras = texto.ToLower().Split(' ');
+            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
+
+            for (int i = 0; i < palavras.Length; i++)
+            {
+                string palavra = palavras[i];
+
+                // Trata nomes compostos com hífen
+                if (palavra.Contains("-"))
+                {
+                    string[] compostos = palavra.Split('-');
+                    for (int j = 0; j < compostos.Length; j++)
+                    {
+                        compostos[j] = ti.ToTitleCase(compostos[j]);
+                    }
+                    palavra = string.Join("-", compostos);
+                }
+                else if (i == 0 || Array.IndexOf(excecoes, palavra) == -1)
+                {
+                    palavra = ti.ToTitleCase(palavra);
+                }
+
+                palavras[i] = palavra;
+            }
+
+            return string.Join(" ", palavras);
         }
     }
 }
