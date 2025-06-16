@@ -31,6 +31,63 @@ namespace MauiTempoAgora
             }
         }
 
+        private async void ButtonLocalizacao_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                GeolocationRequest request = new GeolocationRequest(
+                        GeolocationAccuracy.Medium,
+                        TimeSpan.FromSeconds(10)
+                    );
+
+                Location? local = await Geolocation.Default.GetLocationAsync(request);
+
+                if (local != null)
+                {
+                    string local_coordenadas = $"Latitude: {local.Latitude} \n" + 
+                        $"Longitude: {local.Longitude}";
+
+                    txt_cidade.Text = await GetCidade(local.Latitude, local.Longitude);
+                }
+            }
+            catch (FeatureNotSupportedException fnsEx)
+            {
+                await DisplayAlert("Erro: Dispositivo não Suporta", fnsEx.Message, "OK");
+            }
+            catch (FeatureNotEnabledException fneEx)
+            {
+                await DisplayAlert("Erro: Localização Desabilitada", fneEx.Message, "OK");
+            }
+            catch (PermissionException pEx)
+            {
+                await DisplayAlert("Erro: Permissão da Localização", pEx.Message, "OK");
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
+        }
+
+        private async Task<string> GetCidade(double lat, double lon)
+        {
+            try
+            {
+                IEnumerable<Placemark> places = await Geocoding.Default.GetPlacemarksAsync(lat, lon);
+
+                Placemark? place = places.FirstOrDefault();
+
+                if (place != null)
+                    return place.Locality;
+                else
+                    return "";
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro: Obtenção do nome da Cidade", ex.Message, "OK");
+                return "";
+            }
+        }
+
         private async void ButtonPrevisao_Clicked(object sender, EventArgs e)
         {
             try
@@ -41,7 +98,7 @@ namespace MauiTempoAgora
 
                     if (t != null)
                     {
-                        t.cidade = CapitalizarNome(txt_cidade.Text);
+                        t.cidade = (await GetCidade(t.lat, t.lon)) ?? "Cidade não identificada";
                         t.data = DateTime.Now;
                         string dados_previsao = "";
 
@@ -158,40 +215,6 @@ namespace MauiTempoAgora
             {
                 await DisplayAlert("Ops", ex.Message, "OK");
             }
-        }
-
-        public static string CapitalizarNome(string texto)
-        {
-            if (string.IsNullOrWhiteSpace(texto))
-                return texto;
-
-            string[] excecoes = { "de", "da", "do", "das", "dos", "e" };
-            string[] palavras = texto.ToLower().Split(' ');
-            TextInfo ti = CultureInfo.CurrentCulture.TextInfo;
-
-            for (int i = 0; i < palavras.Length; i++)
-            {
-                string palavra = palavras[i];
-
-                // Trata nomes compostos com hífen
-                if (palavra.Contains("-"))
-                {
-                    string[] compostos = palavra.Split('-');
-                    for (int j = 0; j < compostos.Length; j++)
-                    {
-                        compostos[j] = ti.ToTitleCase(compostos[j]);
-                    }
-                    palavra = string.Join("-", compostos);
-                }
-                else if (i == 0 || Array.IndexOf(excecoes, palavra) == -1)
-                {
-                    palavra = ti.ToTitleCase(palavra);
-                }
-
-                palavras[i] = palavra;
-            }
-
-            return string.Join(" ", palavras);
         }
     }
 }
