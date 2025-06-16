@@ -98,7 +98,7 @@ namespace MauiTempoAgora
 
                     if (t != null)
                     {
-                        t.cidade = (await GetCidade(t.lat, t.lon)) ?? "Cidade não identificada";
+                        t.cidade = (await GetCidade((double)t.lat, (double)t.lon)) ?? "Cidade não identificada";
                         t.data = DateTime.Now;
                         string dados_previsao = "";
 

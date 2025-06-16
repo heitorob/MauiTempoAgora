@@ -13,8 +13,8 @@
             Padding="30,0"
             Spacing="25">
 
+                <Button Text="Minha Localização" Clicked="ButtonLocalizacao_Clicked" BackgroundColor="RoyalBlue" Margin="0, 15, 0, 0"/>
                 <Entry x:Name="txt_cidade" Placeholder="Digite a cidade." BackgroundColor="White"/>
-                <Button Text="Minha Localização" Clicked="ButtonLocalizacao_Clicked" BackgroundColor="RoyalBlue"/>
                 <Button Text="Buscar Previsão" Clicked="ButtonPrevisao_Clicked" BackgroundColor="RoyalBlue"/>
 
                 <Border
